@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button'
 import { useGetAllEvents } from '@/hooks/useGetAllEvents'
 import { deleteEvent } from '@/services/EventsService'
+import toast from 'react-hot-toast'
 
 export default function Home() {
   const { events, mutate } = useGetAllEvents()
@@ -10,6 +11,7 @@ export default function Home() {
     await deleteEvent(id)
 
     mutate()
+    toast.success('Event deleted!')
   }
 
   return (
