@@ -1,11 +1,17 @@
 'use client'
-import { Button } from '@/components/ui/button'
+import { Modal } from '@/components/ui'
+import { Button } from '@/components/ui/button/button'
+import { ModalContext } from '@/components/ui/modal/modalContext'
 import { useGetAllEvents } from '@/hooks/useGetAllEvents'
 import { deleteEvent } from '@/services/EventsService'
+import { useContext } from 'react'
 import toast from 'react-hot-toast'
 
 export default function Home() {
   const { events, mutate } = useGetAllEvents()
+  const { openModal } = useContext(ModalContext)
+
+  const modal = true
 
   const handleDeleteEvent = async (id: string) => {
     await deleteEvent(id)
@@ -19,9 +25,15 @@ export default function Home() {
       {events?.map((event: any) => (
         <>
           <p key={event.id}>{event.title}</p>
-          <Button onClick={() => handleDeleteEvent(event.id)}>Delete</Button>
+          <Button onClick={() => openModal('modal')}>Delete</Button>
         </>
       ))}
+
+      {modal && (
+        <Modal title="Modal" id="modal">
+          <p>Teste</p>
+        </Modal>
+      )}
     </main>
   )
 }
