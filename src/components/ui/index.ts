@@ -1,6 +1,6 @@
 export { Button } from './button/button'
 export { Calendar } from './calendar/calendar'
-export { Checkbox } from './checkbox/checkbox'
+export { default as CreateEventModal } from './createEventModal/createEventModal'
 export * from './dialog/dialog'
 export { default as EventCard } from './eventCard/eventCard'
 export { default as EventList } from './eventList/eventList'

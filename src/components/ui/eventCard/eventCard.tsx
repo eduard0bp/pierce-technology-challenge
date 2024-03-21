@@ -1,13 +1,9 @@
 'use client'
 import { EventProps } from '@/interface/EventInterface'
-import moment from 'moment'
-import { Button, Modal } from '..'
+import { Button, CreateEventModal, Modal } from '..'
 import { Pencil, Trash2 } from 'lucide-react'
-import { useContext, useState } from 'react'
-import { deleteEvent } from '@/services/EventsService'
-import toast from 'react-hot-toast'
-import CreateEventModal from '../createEventModal/createEventModal'
-import { ModalContext } from '../modal/modalContext'
+import { useEventCard } from './eventCard.modules'
+import moment from 'moment'
 
 interface EventCardProps {
   event: EventProps
@@ -15,26 +11,15 @@ interface EventCardProps {
 }
 
 const EventCard = ({ event, mutate }: EventCardProps) => {
-  const { openModal, closeModal } = useContext(ModalContext)
-
-  const [openDetails, setOpenDetails] = useState(false)
-
-  const handleDelete = async (id: string) => {
-    try {
-      await deleteEvent(id)
-
-      toast.success('Event deleted successfully')
-
-      mutate()
-    } catch {
-      toast.error('Error deleting event')
-    }
-  }
+  const { closeModal, openModal, openDetails, setOpenDetails, handleDelete } =
+    useEventCard({
+      mutate
+    })
 
   return (
     <div>
       <p className="text-sm text-bluePrimary mb-2">
-        Evento criado em: {moment(event.createdAt).format('DD/MM/YYYY')}
+        Event created in: {moment(event.createdAt).format('DD/MM/YYYY')}
       </p>
       <div className="flex flex-col justify-between px-6 py-4 rounded-tl-2xl rounded-bl-2xl rounded-tr-md rounded-br-md border-2 border-border border-r-4 border-r-blueSecondary shadow-md relative">
         <div className="flex-1 flex flex-col gap-4 text-bluePrimary font-bold">
@@ -73,7 +58,7 @@ const EventCard = ({ event, mutate }: EventCardProps) => {
           className="self-end text-bluePrimary text-base font-bold"
           onClick={() => setOpenDetails(!openDetails)}
         >
-          {openDetails ? 'Ocultar detalhes' : 'Ver detalhes'}
+          {openDetails ? 'Hide details' : 'See more'}
         </Button>
       </div>
 
