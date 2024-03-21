@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pierce Technology Challenge
 
-## Getting Started
+## Pré-requisitos
 
-First, run the development server:
+Certifique-se de ter Node.js e Yarn (ou npm) instalados em sua máquina. Se não, você pode baixá-los e instalá-los:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Node.js](https://nodejs.org/)
+- [Yarn](https://yarnpkg.com/) ou [npm](https://www.npmjs.com/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Configuração Inicial
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Clone o repositório para sua máquina local usando:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+`git clone https://github.com/eduard0bp/pierce-technology-challenge`
 
-## Learn More
+Navegue até a pasta do projeto:
 
-To learn more about Next.js, take a look at the following resources:
+`cd pierce-technology-challenge`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Instale as dependências do projeto:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+`yarn install`
+ou
+`npm install`
 
-## Deploy on Vercel
+## Executando a Aplicação
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Para construir e executar a aplicação em um ambiente de desenvolvimento, use:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+`yarn build & yarn start `
+ou
+`npm run build & npm run start `
+
+A aplicação estará disponível em [http://localhost:3000](http://localhost:3000).
