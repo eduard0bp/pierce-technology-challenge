@@ -20,22 +20,30 @@ import { format } from 'date-fns'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { createEvent } from '@/services/EventsService'
+import { createEvent, updateEvent } from '@/services/EventsService'
 import { eventSchema } from '@/schema/EventSchema'
 import toast from 'react-hot-toast'
+import { EventProps } from '@/interface/EventInterface'
 
 interface CreateEventModalProps {
   closeModal: (id: string) => void
   mutate: () => void
+  isEdit?: boolean
+  event?: EventProps
 }
 
-const CreateEventModal = ({ closeModal, mutate }: CreateEventModalProps) => {
+const CreateEventModal = ({
+  closeModal,
+  mutate,
+  isEdit = false,
+  event
+}: CreateEventModalProps) => {
   const form = useForm<z.infer<typeof eventSchema>>({
     resolver: zodResolver(eventSchema),
     defaultValues: {
-      title: '',
-      date: new Date(),
-      description: ''
+      title: isEdit ? event?.title : '',
+      date: isEdit ? new Date(event?.date ?? new Date()) : new Date(),
+      description: isEdit ? event?.description : ''
     }
   })
 
@@ -58,10 +66,32 @@ const CreateEventModal = ({ closeModal, mutate }: CreateEventModalProps) => {
     }
   }
 
+  async function handleUpdate(values: z.infer<typeof eventSchema>) {
+    try {
+      const formattedValues = {
+        ...values,
+        date: format(values.date, 'yyyy-MM-dd')
+      }
+
+      await updateEvent(event?.id!, formattedValues)
+
+      mutate()
+
+      closeModal(`editEvent${event?.id}`)
+
+      toast.success('Event updated successfully')
+    } catch (error) {
+      toast.error('Error updating event')
+    }
+  }
+
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          onSubmit={form.handleSubmit(isEdit ? handleUpdate : onSubmit)}
+          className="space-y-4"
+        >
           <FormField
             control={form.control}
             name="date"
@@ -140,7 +170,11 @@ const CreateEventModal = ({ closeModal, mutate }: CreateEventModalProps) => {
             <Button
               type="button"
               className="bg-grayPrimary text-blueSecondary w-[100px] hover:bg-grayPrimary/70"
-              onClick={() => closeModal('createEvent')}
+              onClick={() =>
+                closeModal(
+                  `${isEdit ? `editEvent${event?.id}` : 'createEvent'}`
+                )
+              }
             >
               Cancel
             </Button>
@@ -149,7 +183,7 @@ const CreateEventModal = ({ closeModal, mutate }: CreateEventModalProps) => {
               disabled={form.formState.isSubmitting}
               className="bg-bluePrimary text-grayPrimary hover:bg-blueSecondary w-[100px] disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Create
+              {isEdit ? 'Edit' : 'Create'}
             </Button>
           </div>
         </form>

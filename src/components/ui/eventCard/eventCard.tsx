@@ -1,11 +1,13 @@
 'use client'
 import { EventProps } from '@/interface/EventInterface'
 import moment from 'moment'
-import { Button } from '..'
+import { Button, Modal } from '..'
 import { Pencil, Trash2 } from 'lucide-react'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { deleteEvent } from '@/services/EventsService'
 import toast from 'react-hot-toast'
+import CreateEventModal from '../createEventModal/createEventModal'
+import { ModalContext } from '../modal/modalContext'
 
 interface EventCardProps {
   event: EventProps
@@ -13,6 +15,8 @@ interface EventCardProps {
 }
 
 const EventCard = ({ event, mutate }: EventCardProps) => {
+  const { openModal, closeModal } = useContext(ModalContext)
+
   const [openDetails, setOpenDetails] = useState(false)
 
   const handleDelete = async (id: string) => {
@@ -51,7 +55,10 @@ const EventCard = ({ event, mutate }: EventCardProps) => {
         >
           <Trash2 />
         </Button>
-        <Button className="absolute top-3 right-20">
+        <Button
+          className="absolute top-3 right-20"
+          onClick={() => openModal(`editEvent${event.id}`)}
+        >
           <Pencil />
         </Button>
 
@@ -69,6 +76,15 @@ const EventCard = ({ event, mutate }: EventCardProps) => {
           {openDetails ? 'Ocultar detalhes' : 'Ver detalhes'}
         </Button>
       </div>
+
+      <Modal id={`editEvent${event.id}`} title="Edit Event">
+        <CreateEventModal
+          closeModal={closeModal}
+          mutate={mutate}
+          isEdit
+          event={event}
+        />
+      </Modal>
     </div>
   )
 }
