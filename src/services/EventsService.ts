@@ -9,3 +9,7 @@ export const deleteEvent = async (id: string) => {
 export const updateEvent = async (id: string, data: EventProps) => {
   return await axios.put(`${BASE_URL}/${id}`, data)
 }
+
+export const createEvent = async (data: EventProps) => {
+  return await axios.post(BASE_URL, data)
+}

@@ -1,15 +1,21 @@
 'use client'
 import { ChevronsRight, Plus } from 'lucide-react'
-import { Button, EventCard } from '..'
+import { Button, EventCard, Modal } from '..'
 import { useGetAllEvents } from '@/hooks/useGetAllEvents'
+import { useContext } from 'react'
+import { ModalContext } from '../modal/modalContext'
+import CreateEventModal from '../createEventModal/createEventModal'
 
 const EventList = () => {
   const { events, eventsLoading, mutate } = useGetAllEvents()
 
-  const orderEvents = events?.sort(
-    (a, b) =>
-      new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-  )
+  const { openModal, closeModal } = useContext(ModalContext)
+
+  events?.sort((a, b) => {
+    const dateA = new Date(a.createdAt ?? Date.now()).getTime()
+    const dateB = new Date(b.createdAt ?? Date.now()).getTime()
+    return dateB - dateA
+  })
 
   return (
     <div className="bg-grayPrimary flex-1 lg:rounded-md flex flex-col p-6 max-h-full gap-3 shadow-lg">
@@ -18,7 +24,10 @@ const EventList = () => {
           <ChevronsRight size={32} color="#0b1232" />
           <h1 className="text-2xl text-bluePrimary">Events</h1>
         </header>
-        <Button className="flex items-center gap-2 bg-bluePrimary text-grayPrimary hover:bg-blueSecondary">
+        <Button
+          className="flex items-center gap-2 bg-bluePrimary text-grayPrimary hover:bg-blueSecondary"
+          onClick={() => openModal('createEvent')}
+        >
           <Plus />
           Add Event
         </Button>
@@ -31,15 +40,19 @@ const EventList = () => {
           </div>
         ) : (
           <div className="flex flex-col gap-3">
-            {orderEvents?.map(event => (
-              <>
-                <EventCard key={event.id} event={event} />
+            {events?.map(event => (
+              <div key={event.id}>
+                <EventCard event={event} mutate={mutate} />
                 <hr className="my-4 text-border w-full" />
-              </>
+              </div>
             ))}
           </div>
         )}
       </div>
+
+      <Modal id="createEvent" title="Create Event">
+        <CreateEventModal closeModal={closeModal} mutate={mutate} />
+      </Modal>
     </div>
   )
 }

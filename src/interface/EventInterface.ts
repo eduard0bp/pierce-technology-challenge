@@ -1,7 +1,7 @@
 export interface EventProps {
-  id: string
+  id?: string
   title: string
   description: string
   date: string
-  created_at: Date
+  createdAt?: Date
 }
