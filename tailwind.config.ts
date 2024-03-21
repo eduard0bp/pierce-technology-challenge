@@ -14,7 +14,8 @@ const config = {
       bluePrimary: '#0b1232',
       blueSecondary: '#749fbc',
       grayPrimary: '#e9e7e8',
-      white: '#ffffff'
+      white: '#ffffff',
+      border: '#D7D8E4'
     },
     container: {
       center: true,

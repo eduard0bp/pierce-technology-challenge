@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.className} bg-grayPrimary h-screen w-screen overflow-hidden`}
+        className={`${roboto.className} bg-blueSecondary h-screen w-screen overflow-hidden`}
       >
         <ModalProvider>{children}</ModalProvider>
         <Toaster />
