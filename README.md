@@ -1,34 +1,34 @@
 # Pierce Technology Challenge
 
-## Pré-requisitos
+## Prerequisites
 
-Certifique-se de ter Node.js e Yarn (ou npm) instalados em sua máquina. Se não, você pode baixá-los e instalá-los:
+Make sure you have Node.js and Yarn (or npm) installed on your machine. If not, you can download and install them:
 
 - [Node.js](https://nodejs.org/)
-- [Yarn](https://yarnpkg.com/) ou [npm](https://www.npmjs.com/)
+- [Yarn](https://yarnpkg.com/) or [npm](https://www.npmjs.com/)
 
-## Configuração Inicial
+## Initial setting
 
-Clone o repositório para sua máquina local usando:
+Clone the repository to your local machine using:
 
 `git clone https://github.com/eduard0bp/pierce-technology-challenge`
 
-Navegue até a pasta do projeto:
+Navigate to the project folder:
 
 `cd pierce-technology-challenge`
 
-Instale as dependências do projeto:
+Install project dependencies:
 
 `yarn install`
-ou
+or
 `npm install`
 
-## Executando a Aplicação
+## Running the Application
 
-Para construir e executar a aplicação em um ambiente de desenvolvimento, use:
+To build and run the application in a development environment, use:
 
 `yarn build & yarn start `
-ou
+or
 `npm run build & npm run start `
 
-A aplicação estará disponível em [http://localhost:3000](http://localhost:3000).
+The application will be available at [http://localhost:3000](http://localhost:3000).
